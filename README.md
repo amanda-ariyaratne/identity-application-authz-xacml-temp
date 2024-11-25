@@ -12,12 +12,10 @@ However, you can still use the XACML feature by following the below guide to ena
 
 ### Pre-requisites:
 
-1. Download Identity Server latest pack using the following link.
+1. Download & unzip Identity Server latest pack using the following link.
    https://wso2.com/identity-server/
 
-2. Download the XACML connector artifacts from here https://store.wso2.com.
-
-3. Unzip the downloaded pack.
+2. Download & unzip the XACML connector artifacts from here https://store.wso2.com.
 
 ### Setup database:
 
@@ -53,4 +51,18 @@ Please follow the below steps.
 `<XACML_CONNECTOR>/config-files/org.wso2.carbon.identity.xacml.server.feature.default.json`
 file to the `<IS_HOME>/repository/resources/conf/default.json`.
 
-7. Restart Identity Server.
+7. Add default XACML policies resides in folder
+`<XACML_CONNECTOR>/config-files/policies`  to the
+`<IS_HOME>/repository/resources/identity/policies/xacml/default` folder.
+
+8. Append the below configuration to the <IS_HOME>/repository/conf/deployment.toml file.
+
+```toml
+[[event_listener]]
+id = "xacml_authorization_handler"
+type = "org.wso2.carbon.identity.core.handler.AbstractIdentityHandler"
+name = "org.wso2.carbon.identity.application.authz.xacml.handler.impl.XACMLBasedAuthorizationHandler"
+order = 899
+```
+
+9. Restart Identity Server.

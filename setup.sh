@@ -82,4 +82,24 @@ else
   exit 1
 fi
 
+# Step 7: Add default XACML policies.
+echo "Copying XACML policies..."
+POLICIES_DIR="$IS_HOME/repository/resources/identity/policies/xacml/default"
+echo "Ensuring XACML policies directory exists..."
+mkdir -p "$POLICIES_DIR"
+echo "Copying XACML policies..."
+cp -r "$XACML_CONNECTOR/policies/"* "$POLICIES_DIR/"
+
+# Step 8: Append custom event listener configuration to `deployment.toml`.
+DEPLOYMENT_TOML="$IS_HOME/repository/conf/deployment.toml"
+echo "Appending XACML authorization handler configuration to deployment.toml..."
+cat <<EOL >> "$DEPLOYMENT_TOML"
+
+[[event_listener]]
+id = "xacml_authorization_handler"
+type = "org.wso2.carbon.identity.core.handler.AbstractIdentityHandler"
+name = "org.wso2.carbon.identity.application.authz.xacml.handler.impl.XACMLBasedAuthorizationHandler"
+order = 899
+EOL
+
 echo "Script completed successfully."
