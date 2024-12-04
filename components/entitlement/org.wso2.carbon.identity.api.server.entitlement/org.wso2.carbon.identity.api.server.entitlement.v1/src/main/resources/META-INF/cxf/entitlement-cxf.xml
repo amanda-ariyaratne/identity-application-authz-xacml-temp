@@ -25,13 +25,21 @@
     <import resource="classpath:META-INF/cxf/cxf.xml"/>
 
     <bean class="org.wso2.carbon.identity.api.server.entitlement.v1.impl.EntitlementsApiServiceImpl"/>
-<!--    <bean class="org.wso2.carbon.identity.api.server.entitlement.v1.core.ServerEntitlementsManagementService"/>-->
-<!--    <bean class="org.wso2.carbon.identity.api.server.entitlement.common.EntitlementManagementServiceHolder">-->
-<!--        <property name="entitlementAdminService" ref="entitlementAdminServiceOSGIServiceFactoryBean"/>-->
-<!--        <property name="entitlementPolicyAdminService" ref="entitlementPolicyAdminServiceOSGIServiceFactoryBean"/>-->
-<!--    </bean>-->
-<!--    <bean id="entitlementAdminServiceOSGIServiceFactoryBean"-->
-<!--          class="org.wso2.carbon.identity.api.server.entitlement.common.factory.EntitlementAdminServiceOSGIServiceFactory"/>-->
-<!--    <bean id="entitlementPolicyAdminServiceOSGIServiceFactoryBean"-->
-<!--          class="org.wso2.carbon.identity.api.server.entitlement.common.factory.EntitlementPolicyAdminServiceOSGIServiceFactory"/>-->
+    <bean id="entitlementAdminServiceOSGIServiceFactory"
+          class="org.wso2.carbon.identity.api.server.entitlement.common.factory.EntitlementAdminServiceOSGIServiceFactory"/>
+    <bean id="entitlementPolicyAdminServiceOSGIServiceFactory"
+          class="org.wso2.carbon.identity.api.server.entitlement.common.factory.EntitlementPolicyAdminServiceOSGIServiceFactory"/>
+    <bean id="entitlementAdminService"
+          factory-bean="entitlementAdminServiceOSGIServiceFactory"
+          factory-method="createInstance" />
+    <bean id="entitlementPolicyAdminService"
+          factory-bean="entitlementPolicyAdminServiceOSGIServiceFactory"
+          factory-method="createInstance" />
+    <bean id="entitlementPolicyAdminServiceOSGIServiceFactoryBean"
+          class="org.wso2.carbon.identity.api.server.entitlement.common.factory.EntitlementPolicyAdminServiceOSGIServiceFactory"/>
+    <bean class="org.wso2.carbon.identity.api.server.entitlement.common.EntitlementManagementServiceHolder">
+        <property name="entitlementAdminService" ref="entitlementAdminService"/>
+        <property name="entitlementPolicyAdminService" ref="entitlementPolicyAdminService"/>
+    </bean>
+    <bean class="org.wso2.carbon.identity.api.server.entitlement.v1.core.ServerEntitlementsManagementService"/>
 </beans>
