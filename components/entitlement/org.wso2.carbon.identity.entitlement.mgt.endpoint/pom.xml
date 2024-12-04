@@ -16,18 +16,17 @@
   ~ specific language governing permissions and limitations
   ~ under the License.
   -->
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-    <modelVersion>4.0.0</modelVersion>
 
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
         <groupId>org.wso2.carbon.identity.application.authz.xacml</groupId>
         <artifactId>entitlement</artifactId>
-        <relativePath>../pom.xml</relativePath>
         <version>2.4.6-SNAPSHOT</version>
     </parent>
-
-    <artifactId>org.wso2.carbon.identity.entitlement.endpoint</artifactId>
-    <name>WSO2 Carbon - Entitlement REST</name>
+    <modelVersion>4.0.0</modelVersion>
+    <artifactId>org.wso2.carbon.identity.entitlement.mgt.endpoint</artifactId>
     <packaging>war</packaging>
 
     <build>
@@ -35,10 +34,10 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <configuration>
-                    <source>1.8</source>
-                    <target>1.8</target>
-                </configuration>
+<!--                <configuration>-->
+<!--                    <source>1.8</source>-->
+<!--                    <target>1.8</target>-->
+<!--                </configuration>-->
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -51,7 +50,7 @@
                             <directory>src/main/webapp</directory>
                         </resource>
                     </webResources>
-                    <warName>api#identity#xacml</warName>
+                    <warName>api#identity#entitlement#v1.0</warName>
                 </configuration>
             </plugin>
         </plugins>
@@ -132,12 +131,24 @@
         <dependency>
             <groupId>org.wso2.carbon.identity.application.authz.xacml</groupId>
             <artifactId>org.wso2.carbon.identity.api.server.entitlement.common</artifactId>
-            <exclusions>
-                <exclusion>
-                    <groupId>*</groupId>
-                    <artifactId>*</artifactId>
-                </exclusion>
-            </exclusions>
+            <scope>compile</scope>
+        </dependency>
+        <!--Test Dependencies-->
+        <dependency>
+            <groupId>org.testng</groupId>
+            <artifactId>testng</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.jacoco</groupId>
+            <artifactId>org.jacoco.agent</artifactId>
+            <classifier>runtime</classifier>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <scope>test</scope>
         </dependency>
     </dependencies>
 </project>
